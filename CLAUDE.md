@@ -9,7 +9,7 @@ A local-first web app for language learning audio processing. The user uploads a
 | Layer | Tech |
 |---|---|
 | Backend | FastAPI + Uvicorn |
-| Transcription | faster-whisper (`large-v2` model, CPU, int8) |
+| Transcription | faster-whisper (`large-v2` model, GPU float16 / CPU int8 auto-detect) |
 | Audio cutting | FFmpeg — installed via winget, on PATH |
 | Frontend | Plain HTML + JS + CSS (no build step) |
 | Storage | Local filesystem — JSON project files (UTF-8) |
@@ -88,7 +88,7 @@ temp/                ← scratch space
 - **Current model:** `large-v2` (best multilingual quality, slow on CPU — ~5–10× real-time)
 - **Faster alternative:** change to `"medium"` or `"base"` in `whisper_service.py:8` — tradeoff is worse multilingual accuracy
 - **Language selection:** user picks a language in the upload form; passed as `language=` to `model.transcribe()`. If left as "Auto-detect", Whisper infers from the first ~30s of audio and may lock onto English for mixed files — forcing a language is more reliable for non-English audio
-- **Mixed-language limitation:** Whisper is not great at true code-switching (e.g. English and Thai alternating sentence-by-sentence). `large-v2` + `condition_on_previous_text=False` is the best available approach without a GPU
+- **Mixed-language limitation:** Whisper is not great at true code-switching (e.g. English and Thai alternating sentence-by-sentence). `large-v2` + `condition_on_previous_text=False` + GPU is the best available approach
 
 ## Waveform (frontend)
 
@@ -123,10 +123,10 @@ Each segment has a checkbox. Unchecked segments are excluded from the ZIP export
 - **Corrupt project files:** if the server crashes mid-write (e.g. encoding error), a zero-byte `.json` is left in `projects/`. `list_projects()` skips these silently. Delete them manually or they stay harmless.
 - **ffmpeg PATH:** ffmpeg was installed by winget after the initial session. Any server started in an old shell won't see it. Always start the server in a fresh terminal or refresh the PATH explicitly.
 - **large-v2 first run:** downloads ~3 GB from Hugging Face on first transcription, cached at `~/.cache/huggingface/`. Subsequent runs use the cache.
-- **GPU / cublas64_12.dll:** CTranslate2 4.7.1 requires CUDA 12.x runtime DLLs (`cublas64_12.dll`). The app auto-detects and falls back to CPU if they are missing. To enable GPU, install CUDA Toolkit 12.x from `https://developer.nvidia.com/cuda-12-4-1-download-archive` (Windows → x86_64 → 11 → exe local, ~3 GB). After install, open a fresh terminal — `where.exe cublas64_12.dll` should return a path. CUDA 13.x does NOT provide `cublas64_12.dll`. winget's `Nvidia.CUDA` package is currently 13.2 and will not fix this — get 12.x from nvidia.com directly.
+- **GPU / cublas64_12.dll:** CTranslate2 4.7.1 requires CUDA 12.x runtime DLLs (`cublas64_12.dll`). The app auto-detects GPU and falls back to CPU if unavailable. CUDA 13.x (winget `Nvidia.CUDA`) does NOT provide `cublas64_12.dll` — must use CUDA 12.x from nvidia.com. GPU is currently working on this machine (RTX 3070, CUDA 12.x installed).
 
 ## Planned future phases
 
 - **Phase 5:** Merge/split segments, keyboard shortcuts
 - **Phase 6:** Anki export (`.apkg`), translation field, tags
-- **Later:** GPU Whisper (CUDA), SRT/VTT subtitle export, batch folder processing
+- **Later:** SRT/VTT subtitle export, batch folder processing

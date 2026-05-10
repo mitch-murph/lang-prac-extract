@@ -3,7 +3,33 @@
     "allow": [
       "Bash(git init *)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload)",
+      "Bash(Start-Sleep -Seconds 4)",
+      "Bash(Invoke-WebRequest -Uri \"http://localhost:8000/health\" -UseBasicParsing)",
+      "Bash(Select-Object -ExpandProperty Content)",
+      "Bash(pip install *)",
+      "PowerShell(Start-Sleep -Seconds 4; try { \\(Invoke-WebRequest -Uri \"http://localhost:8000/health\" -UseBasicParsing\\).Content } catch { $_.Exception.Message })",
+      "PowerShell(Start-Sleep -Seconds 5; try { \\(Invoke-WebRequest -Uri \"http://localhost:8000/health\" -UseBasicParsing\\).Content } catch { $_.Exception.Message })",
+      "PowerShell(Start-Process \"http://localhost:8000\")",
+      "PowerShell(try { \\(Invoke-WebRequest -Uri \"http://localhost:8000/health\" -UseBasicParsing\\).Content } catch { \"Server not responding: \" + $_.Exception.Message })",
+      "PowerShell(try { \\(Invoke-WebRequest -Uri \"http://localhost:8000/health\" -UseBasicParsing\\).Content } catch { \"down: \" + $_.Exception.Message })",
+      "PowerShell(try { \\(Invoke-WebRequest -Uri \"http://localhost:8000/health\" -UseBasicParsing\\).Content } catch { \"down\" })",
+      "PowerShell(winget *)",
+      "Bash(winget install *)",
+      "PowerShell(Start-Sleep -Seconds 4; try { \\(Invoke-WebRequest -Uri \"http://localhost:8000/health\" -UseBasicParsing\\).Content } catch { \"not up yet\" })",
+      "PowerShell(try { \\(Invoke-WebRequest -Uri \"http://localhost:8000/health\" -UseBasicParsing\\).Content } catch { $_.Exception.Message })",
+      "PowerShell(Get-Process *)",
+      "PowerShell(try { \\(Invoke-WebRequest -Uri \"http://localhost:8000/projects\" -UseBasicParsing\\).Content } catch { $_.Exception.Message })",
+      "PowerShell(\\(Invoke-WebRequest -Uri \"http://localhost:8000/health\" -UseBasicParsing\\).Content)",
+      "PowerShell(Start-Sleep 2; \\(Invoke-WebRequest -Uri \"http://localhost:8000/health\" -UseBasicParsing\\).Content)",
+      "PowerShell(python -c \"import ctranslate2; print\\('CUDA devices:', ctranslate2.get_cuda_device_count\\(\\)\\); print\\('CTranslate2 version:', ctranslate2.__version__\\)\")",
+      "PowerShell(pip install *)",
+      "PowerShell(python -c \"import ctranslate2; print\\(ctranslate2.__version__\\)\")",
+      "PowerShell(conda install *)",
+      "PowerShell(Get-ChildItem *)",
+      "Bash(git remote *)",
+      "Bash(git push *)"
     ]
   }
 }
