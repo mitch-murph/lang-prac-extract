@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lang Audio Tool</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<div id="topbar">
+  <h1>Lang Audio Tool</h1>
+  <span class="spacer"></span>
+  <button class="btn-ghost" id="btn-save" style="display:none">Save</button>
+  <button class="btn-primary" id="btn-export" style="display:none">Export ZIP</button>
+</div>
+
+<div id="app">
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <div id="sidebar-header">
+      Projects
+      <button class="btn-icon" id="btn-new" title="New project">+</button>
+    </div>
+    <div id="project-list"></div>
+  </div>
+
+  <!-- Main -->
+  <div id="main">
+
+    <!-- Upload zone -->
+    <div id="upload-zone">
+      <div id="drop-area">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+        </svg>
+        <h2>Upload Audio</h2>
+        <p>Drag &amp; drop or click to select a file</p>
+        <p class="formats">MP3 · M4A · WAV · OGG · FLAC</p>
+        <input type="file" id="file-input" accept=".mp3,.m4a,.wav,.ogg,.flac" style="display:none" />
+      </div>
+    </div>
+
+    <!-- Processing -->
+    <div id="processing-overlay" class="hidden">
+      <div class="spinner"></div>
+      <p id="processing-msg">Transcribing…</p>
+    </div>
+
+    <!-- Editor -->
+    <div id="editor" class="hidden">
+
+      <div id="player-bar">
+        <span class="filename" id="player-filename"></span>
+        <span class="lang-badge" id="player-lang"></span>
+        <span class="spacer"></span>
+        <div id="waveform-container">
+          <audio id="audio-player" controls style="width:100%;height:40px;"></audio>
+        </div>
+      </div>
+
+      <div id="segment-area">
+        <h3 id="seg-count-label">Segments</h3>
+        <div id="segment-list"></div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
