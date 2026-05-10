@@ -136,6 +136,36 @@ body {
 #drop-area p { color: var(--muted); font-size: 13px; }
 #drop-area .formats { margin-top: 10px; font-size: 11px; color: var(--muted); }
 
+.lang-select-row {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.lang-select-row label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.lang-select-row select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 5px 10px;
+  font-size: 13px;
+  font-family: var(--font);
+  cursor: pointer;
+  outline: none;
+}
+
+.lang-select-row select:focus {
+  border-color: var(--accent);
+}
+
 /* ── Processing overlay ── */
 #processing-overlay {
   flex: 1;
@@ -237,7 +267,7 @@ body {
   padding: 12px 14px;
   margin-bottom: 8px;
   display: grid;
-  grid-template-columns: 36px 1fr auto;
+  grid-template-columns: 20px 32px 1fr auto;
   gap: 10px;
   align-items: start;
   transition: border-color .15s;
@@ -254,7 +284,16 @@ body {
   text-align: right;
 }
 
-.seg-body { display: flex; flex-direction: column; gap: 4px; }
+.seg-checkbox {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  accent-color: var(--accent);
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.seg-body { display: flex; flex-direction: column; gap: 6px; }
 
 .seg-text {
   font-size: 15px;
@@ -270,11 +309,107 @@ body {
 
 .seg-text:focus { color: var(--accent-hover); }
 
-.seg-timestamps {
+/* ── Waveform canvas ── */
+.wave-container {
+  position: relative;
+  width: 100%;
+}
+
+.seg-waveform {
+  display: block;
+  width: 100%;
+  height: 64px;
+  border-radius: 4px;
+  user-select: none;
+  background: #13151f;
+  cursor: grab;
+}
+
+.wave-reset-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  background: rgba(19, 21, 31, 0.82);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0.35;
+  transition: opacity .15s, color .15s;
+  line-height: 1;
+}
+
+.wave-container:hover .wave-reset-btn { opacity: 1; }
+.wave-reset-btn:hover { color: var(--text); border-color: var(--accent); }
+
+/* ── Timestamp row (below waveform) ── */
+.seg-ts-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ts-val {
+  font-family: 'Fira Code', monospace;
   font-size: 11px;
   color: var(--muted);
-  font-family: 'Fira Code', monospace;
+  cursor: pointer;
+  padding: 1px 5px;
+  border-radius: 3px;
+  min-width: 44px;
+  text-align: center;
+  transition: background .1s;
 }
+.ts-val:hover { background: var(--surface2); color: var(--text); }
+
+.ts-input {
+  width: 58px;
+  background: var(--surface2);
+  border: 1px solid var(--accent);
+  color: var(--text);
+  border-radius: 3px;
+  padding: 1px 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  outline: none;
+}
+
+.ts-arrow { font-size: 10px; color: var(--border); margin: 0 3px; }
+.ts-dur { font-size: 11px; color: var(--muted); margin-left: 6px; }
+
+/* ── Segment count header ── */
+.seg-count-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.sel-link {
+  background: none;
+  border: none;
+  font-size: 11px;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--font);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.sel-link:hover { text-decoration: underline; }
 
 .seg-actions { display: flex; gap: 6px; align-items: flex-start; }
 
